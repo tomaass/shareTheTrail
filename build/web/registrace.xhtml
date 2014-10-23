@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./primeTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="top">
+        Share The Trail - Registrace
+    </ui:define>    
+
+    <ui:define name="content">
+        <h:form>
+            <p:messages id="messages" showDetail="true" />
+            <h:panelGrid columns="3">
+                <h:outputText value="Email" />
+                <p:inputText id="email" value="#{user.email}" />
+                <p:message for="email" />
+                <h:outputText value="Heslo" />
+                <p:password id="password" match="password2" value="#{user.password}" />
+                <p:message for="password" />
+                <h:outputText value="Potvrzení hesla:" />
+                <p:password id="password2" value="#{user.password}" />
+                <p:message for="password" />
+                <h:outputText value="Jméno:" />
+                <p:inputText id="name" value="#{user.name}" />
+                <p:message for="name" />
+                <h:commandButton id="addUser" value="Registrovat" action="#{user.addUser}" />
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

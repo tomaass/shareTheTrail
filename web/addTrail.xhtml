@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./primeTemplate.xhtml"
+                    xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="top">
+        Share The Trail - Add Trail
+    </ui:define>
+
+
+
+    <ui:define name="content">
+        <c:if test="#{user.logged}" >
+            <h:form>
+               
+                <c:set target="#{trail}" value="#{user.user}" property="owner" />                
+                        <p:panel header="Základní informace o trailu">
+                            <p:message for="trailname" />
+                            <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid"> 
+                                <h:outputText value="Název:"/>                
+                                <p:inputText id="trailname" value="#{trail.name}" />                
+                                <h:outputText value="Délka: "/>
+                                <p:spinner id="delka" value="#{trail.delka}" suffix="m" min="0" />
+                                <h:outputText value="Popis:" />
+                                <p:inputTextarea  id="popis" rows="6" cols="33" value="#{trail.description}" />
+                                <h:outputText value="Typ:" />
+                                <p:selectOneMenu value="#{trail.type}" id="trailtype">
+                                    <f:selectItem itemLabel="FR" itemValue="FR" />
+                                    <f:selectItem itemLabel="DH" itemValue="DH" />
+                                    <f:selectItem itemLabel="XC" itemValue="XC" />                
+                                    <f:selectItem itemLabel="DIRT" itemValue="DIRT" />
+                                </p:selectOneMenu>   
+                            </h:panelGrid>
+                        </p:panel>
+                   <!-- </p:tab>
+                    <p:tab id="trailmap" title="Mapa">-->
+                        <p:panel header="Poloha trailu">
+ 
+                            <p:gmap id="trailmap" center="#{mapModelManagedBean.center}" zoom="#{mapModelManagedBean.zoom}" type="hybrid" style="width:640px;height:480px" 
+                                    model="#{mapModelManagedBean.mapModel}">  
+                                <p:ajax event="pointSelect" listener="#{mapModelManagedBean.onPointSelect}" update="trailmap" /> 
+                            </p:gmap>
+                             
+                            <p:commandButton id="deletePoint" value="Smazat poslední bod"                                            
+                                             action="#{mapModelManagedBean.delLastPoint()}"
+                                             update="trailmap"/>
+                        </p:panel>
+                    <!--</p:tab>
+                </p:tabView>  -->              
+                    <h:commandButton value="Přidej Trail" action="#{trail.add(mapModelManagedBean.polyline.paths)}" />
+                    
+            </h:form>
+        </c:if>
+    </ui:define>
+</ui:composition>

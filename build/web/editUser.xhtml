@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./primeTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+
+    <ui:define name="content">
+        <c:if test="#{user.logged}" >
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputText value="email:" />
+                    <p:inputText id="eemail" value="#{user.email}" disabled="true" />
+                    <p:message for="eemail" />
+                    <h:outputText value="jméno" id="name" />
+                    <p:inputText id="ename" value="#{user.name}" />
+                    <p:message for="ename" />
+                    <h:outputText value="heslo:" />
+                    <p:password id="newpassword" value="#{user.password}" match="newpassword2" />
+                    <p:message for="newpassword" />
+                    <h:outputText value="heslo pro ověření" />
+                    <p:password id="newpassword2" value="#{user.password}" />
+                    <p:message for="newpassword2" />                               
+                    <h:commandButton id="edituser" value="Uložit" action="#{user.editUser}" />
+                </h:panelGrid>
+            </h:form>
+        </c:if>
+    </ui:define>
+
+</ui:composition>
